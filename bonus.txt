@@ -1,0 +1,35 @@
+USE `library` ;
+
+//добавление книги
+INSERT INTO book (book_ID, Name, Author, Type, Year, Publishing_house, Volume_number, Language, Description) VALUES (111, 'Главное в истории искусств', 'Сьюзи Ходж','Культурология',2021, 'Манн, Иванов и Фербер', 0, 'Русский', 'Введение в удивительный мир искусства. Автор исследует 50 ключевых работ - от наскальной живописи до современных инсталляций');
+
+//добавление расположения книги
+INSERT INTO Location (location_ID, shelf_num) VALUES (111, 6);
+
+//добавление информации о количестве книг в наличии
+INSERT INTO in_stock (instock_ID, Availability) VALUES (111, 2);
+
+-------------------------------------------------
+
+//поиск по названию книги
+SELECT * FROM book WHERE Name LIKE '%Главное в истории искусств%'
+
+//поиск по автору книги
+SELECT * FROM book WHERE Author LIKE '%Сьюзи Ходж%'
+
+//получение информации о наличии книги (сколько штук в наличии) по ее названию. Аналогично можно искать по другим полям (автор, описание и тд)
+SELECT Availability FROM in_stock WHERE instock_ID LIKE (SELECT book_ID FROM book WHERE Name LIKE '%Главное в истории искусств%');
+
+//получение информации о расположении книги (какая полка) по ее названию. Аналогично можно искать по другим полям (автор, описание и тд)
+SELECT shelf_num FROM Location WHERE location_ID LIKE (SELECT book_ID FROM book WHERE Name LIKE '%Главное в истории искусств%');
+
+-------------------------------------------------
+
+//удаление книги с нужным id (в данном случае id=111)
+DELETE FROM book WHERE book_ID=111;
+
+//удаление информации о расположении книги с нужным id (в данном случае id=111)
+DELETE FROM Location WHERE location_ID=111;
+
+//удаление информации о количестве книги в наличии с нужным id (в данном случае id=111)
+DELETE FROM in_stock WHERE instock_ID=111;
